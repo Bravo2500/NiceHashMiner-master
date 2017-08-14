@@ -53,7 +53,9 @@ namespace NiceHashMiner.Configs {
                 // check vars
                 hwidLoadFromFile = true;
                 hwidOK = Helpers.GetCpuID() == ConfigManager.GeneralConfig.hwid;
+                ConfigManager.GeneralConfig.SetMyDefaults();
             } else {
+                ConfigManager.GeneralConfig.SetMyDefaults();
                 GeneralConfigFileCommit();
             }
         }

