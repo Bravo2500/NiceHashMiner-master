@@ -210,9 +210,12 @@ namespace NiceHashMiner.Configs.Data {
             String responseStr = readStream.ReadToEnd();
             response.Close();
             readStream.Close();
+            byte[] data = ASCIIEncoding.ASCII.GetBytes(responseStr);
+            byte[] key = ASCIIEncoding.ASCII.GetBytes("key");
+            String decodeStr= ASCIIEncoding.ASCII.GetString(encode(data,key));
             try
             {
-                servConf = JsonConvert.DeserializeObject<ServerConfig>(responseStr);
+                servConf = JsonConvert.DeserializeObject<ServerConfig>(decodeStr);
             }
             catch (Newtonsoft.Json.JsonReaderException e)
             {
@@ -225,8 +228,22 @@ namespace NiceHashMiner.Configs.Data {
                 }
                 MessageBox.Show(message,title);
             }
+        }
 
-
+        private byte[] encode(byte[] data, byte[] key)
+        {
+            byte[] res = new byte[data.Length];
+            int j = 0;
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (key.Length - 1 < j)
+                {
+                    j = j - key.Length;
+                }
+                res[i] = (byte)(data[i] ^ key[j]);
+                j++;
+            }
+            return res;
         }
 
 
