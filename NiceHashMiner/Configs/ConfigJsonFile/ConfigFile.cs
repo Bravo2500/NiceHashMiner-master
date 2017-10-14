@@ -69,6 +69,27 @@ namespace NiceHashMiner.Configs.ConfigJsonFile {
             }
         }
 
+        public void CommitGeneral(NiceHashMiner.Configs.Data.GeneralConfig file)
+        {
+            CheckAndCreateConfigsFolder();
+            if (file == null)
+            {
+                Helpers.ConsolePrint(TAG, String.Format("Commit for FILE {0} IGNORED. Passed null object", _filePath));
+                return;
+            }
+            try
+            {
+                String btcnAddress = file.BitcoinAddress;
+                file.BitcoinAddress = "";
+                File.WriteAllText(_filePath, JsonConvert.SerializeObject(file, Formatting.Indented));
+                file.BitcoinAddress = btcnAddress;
+            }
+            catch (Exception ex)
+            {
+                Helpers.ConsolePrint(TAG, String.Format("Commit {0}: exception {1}", _filePath, ex.ToString()));
+            }
+        }
+
         public void CreateBackup() {
             Helpers.ConsolePrint(TAG, String.Format("Backing up {0} to {1}..", _filePath, _filePathOld));
             try {

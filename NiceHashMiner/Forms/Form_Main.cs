@@ -930,5 +930,10 @@ namespace NiceHashMiner
 
             UpdateGlobalRate();
         }
+
+        private void toolStripStatusLabelBalanceDollarText_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

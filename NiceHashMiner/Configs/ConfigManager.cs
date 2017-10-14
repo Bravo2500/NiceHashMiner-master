@@ -114,7 +114,7 @@ namespace NiceHashMiner.Configs {
             foreach (var CDev in ComputeDeviceManager.Avaliable.AllAvaliableDevices) {
                 GeneralConfig.LastDevicesSettup.Add(CDev.GetComputeDeviceConfig());
             }
-            GeneralConfigFile.Commit(GeneralConfig);
+            GeneralConfigFile.CommitGeneral(GeneralConfig);
         }
 
         public static void CommitBenchmarks() {

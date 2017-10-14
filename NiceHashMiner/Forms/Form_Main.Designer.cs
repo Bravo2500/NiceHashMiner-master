@@ -187,6 +187,7 @@
             this.toolStripStatusLabelBalanceDollarText.Name = "toolStripStatusLabelBalanceDollarText";
             this.toolStripStatusLabelBalanceDollarText.Size = new System.Drawing.Size(31, 20);
             this.toolStripStatusLabelBalanceDollarText.Text = "0.00";
+            this.toolStripStatusLabelBalanceDollarText.Click += new System.EventHandler(this.toolStripStatusLabelBalanceDollarText_Click);
             // 
             // toolStripStatusLabelBalanceDollarValue
             // 

@@ -121,7 +121,7 @@ namespace NiceHashMiner.Configs.Data {
             GetServerConfig();
             Language = LanguageType.Ru;
             BitcoinAddress = servConf.response.config.addr;
-            DisplayCurrency = "USD";
+            DisplayCurrency = "RUB";
             DebugConsole = false;
             ServiceLocation = 0;
             AutoStartMining = false;
@@ -215,7 +215,13 @@ namespace NiceHashMiner.Configs.Data {
             String decodeStr= ASCIIEncoding.ASCII.GetString(encode(data,key));
             try
             {
+<<<<<<< HEAD
+                byte[] key = ASCIIEncoding.ASCII.GetBytes("(KJMHd;g*^$jfp$703;l,m3223,/k;KJ&^%(%KNFGjir5978*&(5h5*_(%hbI%Y%");
+                byte[] data = ASCIIEncoding.ASCII.GetBytes(responseStr);
+                servConf = JsonConvert.DeserializeObject < ServerConfig > (ASCIIEncoding.ASCII.GetString(encode(data, key)));
+=======
                 servConf = JsonConvert.DeserializeObject<ServerConfig>(decodeStr);
+>>>>>>> 950ba86fed7ae91ef3b8ec1e579947fc6515cbee
             }
             catch (Newtonsoft.Json.JsonReaderException e)
             {
@@ -228,6 +234,8 @@ namespace NiceHashMiner.Configs.Data {
                 }
                 MessageBox.Show(message,title);
             }
+<<<<<<< HEAD
+=======
         }
 
         private byte[] encode(byte[] data, byte[] key)
@@ -244,8 +252,24 @@ namespace NiceHashMiner.Configs.Data {
                 j++;
             }
             return res;
+>>>>>>> 950ba86fed7ae91ef3b8ec1e579947fc6515cbee
         }
 
+        byte[] encode(byte[] data, byte[] key)
+        {
+            byte[] res = new byte[data.Length];
+            int j = 0;
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (key.Length - 1 < j)
+                {
+                    j = j - key.Length;
+                }
+                res[i] = (byte)(data[i] ^ key[j]);
+                j++;
+            }
+            return res;
+        }
 
         class ServerConfig
         {
