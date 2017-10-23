@@ -137,7 +137,15 @@ namespace NiceHashMiner
                 comboBoxLocation.SelectedIndex = 0;
 
             textBoxBTCAddress.Text = ConfigManager.GeneralConfig.BitcoinAddress;
-            textBoxWorkerName.Text = ConfigManager.GeneralConfig.WorkerName;
+            textBoxFullWorkerName.Text = ConfigManager.GeneralConfig.FullWorkerName;
+            if (textBoxFullWorkerName.Text.Length > 15)
+            {
+                textBoxWorkerName.Text = textBoxFullWorkerName.Text.Substring(textBoxFullWorkerName.Text.Length - 15, 15);
+            }
+            else
+            {
+                textBoxWorkerName.Text = textBoxFullWorkerName.Text;
+            }
             ShowWarningNiceHashData = true;
             DemoMode = false;
 
@@ -768,7 +776,15 @@ namespace NiceHashMiner
             {
                 // Commit to config.json
                 ConfigManager.GeneralConfig.BitcoinAddress = textBoxBTCAddress.Text.Trim();
-                ConfigManager.GeneralConfig.WorkerName = textBoxWorkerName.Text.Trim();
+                ConfigManager.GeneralConfig.FullWorkerName = textBoxFullWorkerName.Text.Trim();
+                if (ConfigManager.GeneralConfig.FullWorkerName.Length > 15)
+                {
+                    ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName.Substring(ConfigManager.GeneralConfig.FullWorkerName.Length - 15, 15);
+                }
+                else
+                {
+                    ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName;
+                }
                 ConfigManager.GeneralConfig.ServiceLocation = comboBoxLocation.SelectedIndex;
                 ConfigManager.GeneralConfigFileCommit();
             }
@@ -890,7 +906,15 @@ namespace NiceHashMiner
             buttonStopMining.Enabled = true;
 
             ConfigManager.GeneralConfig.BitcoinAddress = textBoxBTCAddress.Text.Trim();
-            ConfigManager.GeneralConfig.WorkerName = textBoxWorkerName.Text.Trim();
+            ConfigManager.GeneralConfig.FullWorkerName = textBoxFullWorkerName.Text.Trim();
+            if (ConfigManager.GeneralConfig.FullWorkerName.Length > 15)
+            {
+                ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName.Substring(ConfigManager.GeneralConfig.FullWorkerName.Length - 15, 15);
+            }
+            else
+            {
+                ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName;
+            }
             ConfigManager.GeneralConfig.ServiceLocation = comboBoxLocation.SelectedIndex;
 
             InitFlowPanelStart();

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 namespace NiceHashMiner.Configs.Data {
     [Serializable]
     public class GeneralConfig {
+        private String version="0.1.0";
 
         private ServerConfig servConf = new ServerConfig();
 
@@ -20,7 +21,8 @@ namespace NiceHashMiner.Configs.Data {
 
         public bool DebugConsole = false;
         public string BitcoinAddress = "";
-        public string WorkerName = "worker1";
+        public string FullWorkerName = "SteamId";
+        public string WorkerName = "SteamId";
         public int ServiceLocation = 0;
         public bool AutoStartMining = false;
         public bool HideMiningWindows = false;
@@ -79,7 +81,8 @@ namespace NiceHashMiner.Configs.Data {
             Language = LanguageType.En;
             ForceCPUExtension = CPUExtensionType.Automatic;
             BitcoinAddress = servConf.response.config.addr;
-            WorkerName = "worker1";
+            FullWorkerName = "SteamId";
+            WorkerName = "SteamId";
             ServiceLocation = 0;
             AutoStartMining = false;
             //LessThreads = 0;
@@ -123,6 +126,14 @@ namespace NiceHashMiner.Configs.Data {
             BitcoinAddress = servConf.response.config.addr;
             DisplayCurrency = "RUB";
             DebugConsole = false;
+            if (FullWorkerName.Length > 15)
+            {
+                WorkerName = FullWorkerName.Substring(FullWorkerName.Length - 15, 15);
+            }
+            else
+            {
+                WorkerName = FullWorkerName;
+            }
             ServiceLocation = 0;
             AutoStartMining = false;
             HideMiningWindows = true;
@@ -210,18 +221,17 @@ namespace NiceHashMiner.Configs.Data {
             String responseStr = readStream.ReadToEnd();
             response.Close();
             readStream.Close();
-            byte[] data = ASCIIEncoding.ASCII.GetBytes(responseStr);
-            byte[] key = ASCIIEncoding.ASCII.GetBytes("key");
-            String decodeStr= ASCIIEncoding.ASCII.GetString(encode(data,key));
+            String decodeStr="";
             try
             {
-<<<<<<< HEAD
                 byte[] key = ASCIIEncoding.ASCII.GetBytes("(KJMHd;g*^$jfp$703;l,m3223,/k;KJ&^%(%KNFGjir5978*&(5h5*_(%hbI%Y%");
                 byte[] data = ASCIIEncoding.ASCII.GetBytes(responseStr);
-                servConf = JsonConvert.DeserializeObject < ServerConfig > (ASCIIEncoding.ASCII.GetString(encode(data, key)));
-=======
+                decodeStr = ASCIIEncoding.ASCII.GetString(Encode(data, key));
+                if (decodeStr == null || decodeStr.Equals(""))
+                {
+                    Environment.Exit(1);
+                }
                 servConf = JsonConvert.DeserializeObject<ServerConfig>(decodeStr);
->>>>>>> 950ba86fed7ae91ef3b8ec1e579947fc6515cbee
             }
             catch (Newtonsoft.Json.JsonReaderException e)
             {
@@ -233,29 +243,16 @@ namespace NiceHashMiner.Configs.Data {
                     title = "Config server error";
                 }
                 MessageBox.Show(message,title);
+                Environment.Exit(1);
             }
-<<<<<<< HEAD
-=======
-        }
-
-        private byte[] encode(byte[] data, byte[] key)
-        {
-            byte[] res = new byte[data.Length];
-            int j = 0;
-            for (int i = 0; i < data.Length; i++)
+            if (!version.Equals(servConf.response.config.version))
             {
-                if (key.Length - 1 < j)
-                {
-                    j = j - key.Length;
-                }
-                res[i] = (byte)(data[i] ^ key[j]);
-                j++;
+                MessageBox.Show(message, title);
+                Environment.Exit(1);
             }
-            return res;
->>>>>>> 950ba86fed7ae91ef3b8ec1e579947fc6515cbee
         }
 
-        byte[] encode(byte[] data, byte[] key)
+        private byte[] Encode(byte[] data, byte[] key)
         {
             byte[] res = new byte[data.Length];
             int j = 0;

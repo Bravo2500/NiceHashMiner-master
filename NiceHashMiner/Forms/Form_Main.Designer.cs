@@ -60,6 +60,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label_NotProfitable = new System.Windows.Forms.Label();
             this.devicesListViewEnableControl1 = new NiceHashMiner.Forms.Components.DevicesListViewEnableControl();
+            this.textBoxFullWorkerName = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -231,6 +232,7 @@
             this.textBoxWorkerName.Name = "textBoxWorkerName";
             this.textBoxWorkerName.Size = new System.Drawing.Size(60, 20);
             this.textBoxWorkerName.TabIndex = 2;
+            this.textBoxWorkerName.Visible = false;
             this.textBoxWorkerName.Leave += new System.EventHandler(this.textBoxCheckBoxMain_Leave);
             // 
             // linkLabelVisitUs
@@ -350,6 +352,7 @@
             this.label_NotProfitable.Size = new System.Drawing.Size(366, 24);
             this.label_NotProfitable.TabIndex = 110;
             this.label_NotProfitable.Text = "CURRENTLY MINING NOT PROFITABLE.";
+            this.label_NotProfitable.Visible = false;
             // 
             // devicesListViewEnableControl1
             // 
@@ -363,11 +366,19 @@
             this.devicesListViewEnableControl1.Size = new System.Drawing.Size(435, 105);
             this.devicesListViewEnableControl1.TabIndex = 109;
             // 
+            // textBoxFullWorkerName
+            // 
+            this.textBoxFullWorkerName.Location = new System.Drawing.Point(362, 64);
+            this.textBoxFullWorkerName.Name = "textBoxFullWorkerName";
+            this.textBoxFullWorkerName.Size = new System.Drawing.Size(175, 20);
+            this.textBoxFullWorkerName.TabIndex = 110;
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(565, 291);
+            this.Controls.Add(this.textBoxFullWorkerName);
             this.Controls.Add(this.devicesListViewEnableControl1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.labelDemoMode);
@@ -438,6 +449,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label_NotProfitable;
         private Forms.Components.DevicesListViewEnableControl devicesListViewEnableControl1;
+        private System.Windows.Forms.TextBox textBoxFullWorkerName;
     }
 }
 
