@@ -721,6 +721,7 @@ namespace NiceHashMiner
         }
 
         private void buttonStartMining_Click(object sender, EventArgs e) {
+
             IsManuallyStarted = true;
             if (StartMining(true) == StartMiningReturnType.ShowNoMining) {
                 IsManuallyStarted = false;
@@ -865,19 +866,20 @@ namespace NiceHashMiner
                 }
             }
             // Check if the user has run benchmark first
-            if (!isBenchInit) {
-                DialogResult result = MessageBox.Show(International.GetText("EnabledUnbenchmarkedAlgorithmsWarning"),
+            if (!isBenchInit)
+            {
+                /*DialogResult result = MessageBox.Show(International.GetText("EnabledUnbenchmarkedAlgorithmsWarning"),
                                                           International.GetText("Warning_with_Exclamation"),
                                                           MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (result == System.Windows.Forms.DialogResult.Yes) {
-                    BenchmarkForm = new Form_Benchmark(
-                        BenchmarkPerformanceType.Standard,
-                        true);
-                    SetChildFormCenter(BenchmarkForm);
-                    BenchmarkForm.ShowDialog();
-                    BenchmarkForm = null;
-                    InitMainConfigGUIData();
-                } else if (result == System.Windows.Forms.DialogResult.No) {
+                if (result == System.Windows.Forms.DialogResult.Yes) {*/
+                BenchmarkForm = new Form_Benchmark(
+                    BenchmarkPerformanceType.Standard,
+                    true);
+                SetChildFormCenter(BenchmarkForm);
+                BenchmarkForm.ShowDialog();
+                BenchmarkForm = null;
+                InitMainConfigGUIData();
+                /*} else if (result == System.Windows.Forms.DialogResult.No) {
                     // check devices without benchmarks
                     foreach (var cdev in ComputeDeviceManager.Avaliable.AllAvaliableDevices) {
                         if (cdev.Enabled) {
@@ -893,43 +895,47 @@ namespace NiceHashMiner
                     }
                 } else {
                     return StartMiningReturnType.IgnoreMsg;
-                }
-            }
-
-            textBoxBTCAddress.Enabled = false;
-            textBoxWorkerName.Enabled = false;
-            comboBoxLocation.Enabled = false;
-            buttonBenchmark.Enabled = false;
-            buttonStartMining.Enabled = false;
-            buttonSettings.Enabled = false;
-            devicesListViewEnableControl1.IsMining = true;
-            buttonStopMining.Enabled = true;
-
-            ConfigManager.GeneralConfig.BitcoinAddress = textBoxBTCAddress.Text.Trim();
-            ConfigManager.GeneralConfig.FullWorkerName = textBoxFullWorkerName.Text.Trim();
-            if (ConfigManager.GeneralConfig.FullWorkerName.Length > 15)
-            {
-                ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName.Substring(ConfigManager.GeneralConfig.FullWorkerName.Length - 15, 15);
+                }*/
+                return StartMiningReturnType.ShowNoMining;
             }
             else
             {
-                ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName;
+
+                textBoxBTCAddress.Enabled = false;
+                textBoxWorkerName.Enabled = false;
+                comboBoxLocation.Enabled = false;
+                buttonBenchmark.Enabled = false;
+                buttonStartMining.Enabled = false;
+                buttonSettings.Enabled = false;
+                devicesListViewEnableControl1.IsMining = true;
+                buttonStopMining.Enabled = true;
+
+                ConfigManager.GeneralConfig.BitcoinAddress = textBoxBTCAddress.Text.Trim();
+                ConfigManager.GeneralConfig.FullWorkerName = textBoxFullWorkerName.Text.Trim();
+                if (ConfigManager.GeneralConfig.FullWorkerName.Length > 15)
+                {
+                    ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName.Substring(ConfigManager.GeneralConfig.FullWorkerName.Length - 15, 15);
+                }
+                else
+                {
+                    ConfigManager.GeneralConfig.WorkerName = ConfigManager.GeneralConfig.FullWorkerName;
+                }
+                ConfigManager.GeneralConfig.ServiceLocation = comboBoxLocation.SelectedIndex;
+
+                InitFlowPanelStart();
+                ClearRatesALL();
+
+                var btcAdress = DemoMode ? Globals.DemoUser : textBoxBTCAddress.Text.Trim();
+                var isMining = MinersManager.StartInitialize(this, Globals.MiningLocation[comboBoxLocation.SelectedIndex], textBoxWorkerName.Text.Trim(), btcAdress);
+
+                if (!DemoMode) ConfigManager.GeneralConfigFileCommit();
+
+                SMAMinerCheck.Interval = 100;
+                SMAMinerCheck.Start();
+                MinerStatsCheck.Start();
+
+                return isMining ? StartMiningReturnType.StartMining : StartMiningReturnType.ShowNoMining;
             }
-            ConfigManager.GeneralConfig.ServiceLocation = comboBoxLocation.SelectedIndex;
-
-            InitFlowPanelStart();
-            ClearRatesALL();
-
-            var btcAdress = DemoMode ? Globals.DemoUser : textBoxBTCAddress.Text.Trim();
-            var isMining = MinersManager.StartInitialize(this, Globals.MiningLocation[comboBoxLocation.SelectedIndex], textBoxWorkerName.Text.Trim(), btcAdress);
-
-            if (!DemoMode) ConfigManager.GeneralConfigFileCommit();
-
-            SMAMinerCheck.Interval = 100;
-            SMAMinerCheck.Start();
-            MinerStatsCheck.Start();
-
-            return isMining ? StartMiningReturnType.StartMining : StartMiningReturnType.ShowNoMining;
         }
 
         private void StopMining() {

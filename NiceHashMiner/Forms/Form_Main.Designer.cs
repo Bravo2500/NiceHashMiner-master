@@ -81,7 +81,7 @@
             this.textBoxBTCAddress.Name = "textBoxBTCAddress";
             this.textBoxBTCAddress.Size = new System.Drawing.Size(237, 20);
             this.textBoxBTCAddress.TabIndex = 1;
-            this.textBoxBTCAddress.Leave += new System.EventHandler(this.textBoxCheckBoxMain_Leave);
+            //this.textBoxBTCAddress.Leave += new System.EventHandler(this.textBoxCheckBoxMain_Leave);
             // 
             // labelServiceLocation
             // 
@@ -107,7 +107,7 @@
             this.comboBoxLocation.Name = "comboBoxLocation";
             this.comboBoxLocation.Size = new System.Drawing.Size(121, 21);
             this.comboBoxLocation.TabIndex = 0;
-            this.comboBoxLocation.Leave += new System.EventHandler(this.textBoxCheckBoxMain_Leave);
+            //this.comboBoxLocation.Leave += new System.EventHandler(this.textBoxCheckBoxMain_Leave);
             // 
             // labelBitcoinAddress
             // 
@@ -233,7 +233,6 @@
             this.textBoxWorkerName.Size = new System.Drawing.Size(60, 20);
             this.textBoxWorkerName.TabIndex = 2;
             this.textBoxWorkerName.Visible = false;
-            this.textBoxWorkerName.Leave += new System.EventHandler(this.textBoxCheckBoxMain_Leave);
             // 
             // linkLabelVisitUs
             // 
@@ -372,6 +371,7 @@
             this.textBoxFullWorkerName.Name = "textBoxFullWorkerName";
             this.textBoxFullWorkerName.Size = new System.Drawing.Size(175, 20);
             this.textBoxFullWorkerName.TabIndex = 110;
+            this.textBoxFullWorkerName.Leave += new System.EventHandler(this.textBoxCheckBoxMain_Leave);
             // 
             // Form_Main
             // 

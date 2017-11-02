@@ -39,7 +39,7 @@
             // 
             // StartStopBtn
             // 
-            this.StartStopBtn.Location = new System.Drawing.Point(436, 366);
+            this.StartStopBtn.Location = new System.Drawing.Point(447, 29);
             this.StartStopBtn.Name = "StartStopBtn";
             this.StartStopBtn.Size = new System.Drawing.Size(75, 23);
             this.StartStopBtn.TabIndex = 100;
@@ -55,13 +55,14 @@
             this.CloseBtn.TabIndex = 101;
             this.CloseBtn.Text = "&Close";
             this.CloseBtn.UseVisualStyleBackColor = true;
+            this.CloseBtn.Visible = false;
             this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // groupBoxBenchmarkProgress
             // 
             this.groupBoxBenchmarkProgress.Controls.Add(this.labelBenchmarkSteps);
             this.groupBoxBenchmarkProgress.Controls.Add(this.progressBarBenchmarkSteps);
-            this.groupBoxBenchmarkProgress.Location = new System.Drawing.Point(12, 342);
+            this.groupBoxBenchmarkProgress.Location = new System.Drawing.Point(12, 15);
             this.groupBoxBenchmarkProgress.Name = "groupBoxBenchmarkProgress";
             this.groupBoxBenchmarkProgress.Size = new System.Drawing.Size(418, 47);
             this.groupBoxBenchmarkProgress.TabIndex = 108;
@@ -95,6 +96,7 @@
             this.radioButton_SelectedUnbenchmarked.TabStop = true;
             this.radioButton_SelectedUnbenchmarked.Text = "Benchmark Selected Unbenchmarked Algorithms ";
             this.radioButton_SelectedUnbenchmarked.UseVisualStyleBackColor = true;
+            this.radioButton_SelectedUnbenchmarked.Visible = false;
             this.radioButton_SelectedUnbenchmarked.CheckedChanged += new System.EventHandler(this.radioButton_SelectedUnbenchmarked_CheckedChanged_1);
             // 
             // radioButton_RE_SelectedUnbenchmarked
@@ -106,6 +108,7 @@
             this.radioButton_RE_SelectedUnbenchmarked.TabIndex = 110;
             this.radioButton_RE_SelectedUnbenchmarked.Text = "Benchmark All Selected Algorithms ";
             this.radioButton_RE_SelectedUnbenchmarked.UseVisualStyleBackColor = true;
+            this.radioButton_RE_SelectedUnbenchmarked.Visible = false;
             this.radioButton_RE_SelectedUnbenchmarked.CheckedChanged += new System.EventHandler(this.radioButton_RE_SelectedUnbenchmarked_CheckedChanged);
             // 
             // checkBox_StartMiningAfterBenchmark
@@ -117,6 +120,7 @@
             this.checkBox_StartMiningAfterBenchmark.TabIndex = 111;
             this.checkBox_StartMiningAfterBenchmark.Text = "Start mining after benchmark";
             this.checkBox_StartMiningAfterBenchmark.UseVisualStyleBackColor = true;
+            this.checkBox_StartMiningAfterBenchmark.Visible = false;
             this.checkBox_StartMiningAfterBenchmark.CheckedChanged += new System.EventHandler(this.checkBox_StartMiningAfterBenchmark_CheckedChanged);
             // 
             // algorithmsListView1
@@ -128,6 +132,7 @@
             this.algorithmsListView1.Name = "algorithmsListView1";
             this.algorithmsListView1.Size = new System.Drawing.Size(580, 155);
             this.algorithmsListView1.TabIndex = 109;
+            this.algorithmsListView1.Visible = false;
             // 
             // benchmarkOptions1
             // 
@@ -135,6 +140,7 @@
             this.benchmarkOptions1.Name = "benchmarkOptions1";
             this.benchmarkOptions1.Size = new System.Drawing.Size(208, 112);
             this.benchmarkOptions1.TabIndex = 106;
+            this.benchmarkOptions1.Visible = false;
             // 
             // devicesListViewEnableControl1
             // 
@@ -147,12 +153,13 @@
             this.devicesListViewEnableControl1.SaveToGeneralConfig = false;
             this.devicesListViewEnableControl1.Size = new System.Drawing.Size(376, 112);
             this.devicesListViewEnableControl1.TabIndex = 0;
+            this.devicesListViewEnableControl1.Visible = false;
             // 
             // Form_Benchmark
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 401);
+            this.ClientSize = new System.Drawing.Size(547, 76);
             this.Controls.Add(this.checkBox_StartMiningAfterBenchmark);
             this.Controls.Add(this.radioButton_RE_SelectedUnbenchmarked);
             this.Controls.Add(this.radioButton_SelectedUnbenchmarked);

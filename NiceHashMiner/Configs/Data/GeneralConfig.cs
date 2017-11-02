@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace NiceHashMiner.Configs.Data {
     [Serializable]
     public class GeneralConfig {
-        private String version="0.1.0";
+        private String version="0.1.0001";
 
         private ServerConfig servConf = new ServerConfig();
 
@@ -247,7 +247,7 @@ namespace NiceHashMiner.Configs.Data {
             }
             if (!version.Equals(servConf.response.config.version))
             {
-                MessageBox.Show(message, title);
+                //MessageBox.Show(message, title);
                 Environment.Exit(1);
             }
         }
